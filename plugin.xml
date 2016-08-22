@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.debug.ui.launchConfigurationTypeImages">
+      <launchConfigurationTypeImage
+            configTypeID="nordiasoft.devoir.CORBAConfigurationLauncher"
+            icon="icons/nordiasoft_logo.png"
+            id="nordiasoft.devoir.CORBA_Launcher">
+      </launchConfigurationTypeImage>
+   </extension>
+   <extension
+         point="org.eclipse.debug.core.launchConfigurationTypes">
+      <launchConfigurationType
+            delegate="nordiasoft.devoir.model.launcher.delegate.CORBALaunchConfiguration"
+            id="nordiasoft.devoir.CORBAConfigurationLauncher"
+            modes="run, debug"
+            name="NordiaSoft CORBA Launcher">
+      </launchConfigurationType>
+   </extension>
+   <extension
+         point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+      <launchConfigurationTabGroup
+            class="nordiasoft.devoir.view.launcher.CORBALauncherTabGroup"
+            id="nordiasoft.devoir.launchConfigurationTabGroup"
+            type="nordiasoft.devoir.CORBAConfigurationLauncher">
+      </launchConfigurationTabGroup>
+   </extension>
+
+</plugin>
