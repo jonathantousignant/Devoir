@@ -1,5 +1,19 @@
 package nordiasoft.devoir.view;
 
-public class MainView {
+import java.util.Observable;
+import java.util.Observer;
+
+import nordiasoft.devoir.model.corba.element.CorbaElement;
+import nordiasoft.devoir.view.decouverte.DecouverteView;
+
+public class MainView implements Observer {
+	private DecouverteView decouverteView_ = new DecouverteView();
+
+	@Override
+	public void update(Observable o, Object arg) {
+		if (arg instanceof CorbaElement) {
+			decouverteView_.showNamingServiceObjects((CorbaElement) arg);
+		}
+	}
 
 }

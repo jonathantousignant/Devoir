@@ -4,27 +4,66 @@
    <extension
          point="org.eclipse.debug.ui.launchConfigurationTypeImages">
       <launchConfigurationTypeImage
-            configTypeID="nordiasoft.devoir.CORBAConfigurationLauncher"
+            configTypeID="nordiasoft.devoir.CorbaConfigurationLauncher"
             icon="icons/nordiasoft_logo.png"
-            id="nordiasoft.devoir.CORBA_Launcher">
+            id="nordiasoft.devoir.Corba_Launcher">
       </launchConfigurationTypeImage>
    </extension>
    <extension
          point="org.eclipse.debug.core.launchConfigurationTypes">
       <launchConfigurationType
-            delegate="nordiasoft.devoir.model.launcher.delegate.CORBALaunchConfiguration"
-            id="nordiasoft.devoir.CORBAConfigurationLauncher"
+            delegate="nordiasoft.devoir.model.launcher.CorbaLaunchConfiguration"
+            id="nordiasoft.devoir.CorbaConfigurationLauncher"
             modes="run, debug"
-            name="NordiaSoft CORBA Launcher">
+            name="NordiaSoft Corba Launcher">
       </launchConfigurationType>
    </extension>
    <extension
          point="org.eclipse.debug.ui.launchConfigurationTabGroups">
       <launchConfigurationTabGroup
-            class="nordiasoft.devoir.view.launcher.CORBALauncherTabGroup"
+            class="nordiasoft.devoir.view.launcher.CorbaLauncherTabGroup"
             id="nordiasoft.devoir.launchConfigurationTabGroup"
-            type="nordiasoft.devoir.CORBAConfigurationLauncher">
+            type="nordiasoft.devoir.CorbaConfigurationLauncher">
       </launchConfigurationTabGroup>
+   </extension>
+   <extension 
+     point="org.eclipse.ui.startup">
+         <startup class="nordiasoft.devoir.controller.StartupClass"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="nordiasoft.devoir.view.decouverte.DecouverteCommonNavigator"
+            icon="icons/nordiasoft_logo.png"
+            id="nordiasoft.devoir.view.decouverte"
+            name="Découverte">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+   </extension>
+   <extension
+         point="org.eclipse.ui.navigator.navigatorContent">
+         <navigatorContent
+	         activeByDefault="true"
+	         contentProvider="nordiasoft.devoir.model.contentprovider.CorbaElementContentProvider"
+	         id="nordiasoft.devoir.corbaprovider"
+	         labelProvider="nordiasoft.devoir.view.labelprovider.DecouverteLabelProvider"
+	         name="Naming Service contant"
+	         priority="normal">
+			<triggerPoints>
+				<or>
+					<instanceof value="nordiasoft.devoir.model.corba.element.Root" />
+					<instanceof value="nordiasoft.devoir.model.corba.element.ContextCorbaElement" />
+				</or>
+			</triggerPoints>
+			<possibleChildren>
+				<or>
+					<instanceof value="nordiasoft.devoir.model.corba.element.ContextCorbaElement" />
+					<instanceof value="nordiasoft.devoir.model.corba.element.ObjectCorbaElement" />
+				</or>
+			</possibleChildren>
+		</navigatorContent>
    </extension>
 
 </plugin>

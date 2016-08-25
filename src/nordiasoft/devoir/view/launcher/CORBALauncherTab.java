@@ -11,57 +11,53 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-import nordiasoft.devoir.model.launcher.attributes.CORBALaunchConfigurationAttributes;
+import nordiasoft.devoir.controller.attributes.CorbaLaunchConfigurationAttributes;
 
 import org.eclipse.swt.widgets.Group;
 
-public class CORBALauncherTab extends AbstractLaunchConfigurationTab {
+public class CorbaLauncherTab extends AbstractLaunchConfigurationTab {
 	private Text text_;
-	
+
 	@Override
 	public void createControl(Composite parent) {
-	    
-	    Composite comp = new Group(parent, SWT.BORDER);
-	    setControl(comp);
-	    
-	    GridLayoutFactory.swtDefaults().numColumns(2).applyTo(comp);
 
-	    Label label = new Label(comp, SWT.NONE);
-	    label.setText("Console Text:");
-	    GridDataFactory.swtDefaults().applyTo(label);
+		Composite comp = new Group(parent, SWT.BORDER);
+		setControl(comp);
 
-	    text_ = new Text(comp, SWT.BORDER);
-	    text_.setMessage("Console Text");
-	    GridDataFactory.fillDefaults().grab(true, false).applyTo(text_);
-		
+		GridLayoutFactory.swtDefaults().numColumns(2).applyTo(comp);
+
+		Label label = new Label(comp, SWT.NONE);
+		label.setText("OrbInitRef:");
+		GridDataFactory.swtDefaults().applyTo(label);
+
+		text_ = new Text(comp, SWT.BORDER);
+		GridDataFactory.fillDefaults().grab(true, false).applyTo(text_);
+
 	}
 
 	@Override
 	public void setDefaults(ILaunchConfigurationWorkingCopy configuration) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void initializeFrom(ILaunchConfiguration configuration) {
-	    try {
-	        String consoleText = configuration.getAttribute(CORBALaunchConfigurationAttributes.CONSOLE_TEXT,
-	            "Simon says \"RUN!\"");
-	        text_.setText(consoleText);
-	      } catch (CoreException e) {
-	        // ignore here
-	      }
-		
+		try {
+			String consoleText = configuration.getAttribute(CorbaLaunchConfigurationAttributes.ORB_INITIAL_REFERENCE,
+					"corbaname::localhost:1050");
+			text_.setText(consoleText);
+		} catch (CoreException e) {
+		}
+
 	}
 
 	@Override
 	public void performApply(ILaunchConfigurationWorkingCopy configuration) {
-	    configuration.setAttribute(CORBALaunchConfigurationAttributes.CONSOLE_TEXT, text_.getText());
+		configuration.setAttribute(CorbaLaunchConfigurationAttributes.ORB_INITIAL_REFERENCE, text_.getText());
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "NordiaSoft CORBA lauch tab";
 	}
 
