@@ -22,6 +22,7 @@ import org.omg.CosNaming.NamingContextPackage.NotFound;
 import nordiasoft.devoir.model.corba.element.ContextCorbaElement;
 import nordiasoft.devoir.model.corba.element.CorbaElement;
 import nordiasoft.devoir.model.corba.element.ObjectCorbaElement;
+import nordiasoft.devoir.model.corba.element.RootCorbaElement;
 
 public class CorbaNamingService extends Observable implements Observer {
 
@@ -35,9 +36,7 @@ public class CorbaNamingService extends Observable implements Observer {
 	private void getNamingServiceObjects(String args[]) {
 		try {
 			setChanged();
-			
 			notifyObservers(exploreNamingService("Service de nom", getNamingService(args)));
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -45,12 +44,15 @@ public class CorbaNamingService extends Observable implements Observer {
 
 	private CorbaElement exploreNamingService(String rootName, NamingContext context)
 			throws InvalidName, NotFound, CannotProceed, org.omg.CosNaming.NamingContextPackage.InvalidName {
-		
-		
-		return exploreNamingService(rootName, context, null, 0);
+		RootCorbaElement rootCorbaElement = new RootCorbaElement("Service de nom");
+
+		rootCorbaElement.addCorbaElement(exploreNamingService(rootName, context, null, 0));
+
+		return rootCorbaElement;
 	}
-	
-	private CorbaElement exploreNamingService(String contextName, NamingContext context, ContextCorbaElement parent, int treeDepth)
+
+	private CorbaElement exploreNamingService(String contextName, NamingContext context, ContextCorbaElement parent,
+			int treeDepth)
 			throws InvalidName, NotFound, CannotProceed, org.omg.CosNaming.NamingContextPackage.InvalidName {
 
 		ContextCorbaElement contextCorbaElement = new ContextCorbaElement(contextName, parent);
@@ -62,12 +64,12 @@ public class CorbaNamingService extends Observable implements Observer {
 		BindingIterator bit = bih.value;
 
 		boolean remains = true;
-		
+
 		while (remains) {
 			BindingHolder biholder = new BindingHolder();
-			
+
 			remains = bit.next_one(biholder);
-			
+
 			Binding binding = biholder.value;
 
 			NameComponent[] name = binding.binding_name;
@@ -83,7 +85,9 @@ public class CorbaNamingService extends Observable implements Observer {
 			throws NotFound, CannotProceed, org.omg.CosNaming.NamingContextPackage.InvalidName, InvalidName {
 		if (binding.binding_type == BindingType.ncontext) {
 			NamingContext tmpContext = NamingContextHelper.narrow(context.resolve(binding.binding_name));
-			contextCorbaElement.addCorbaElement(exploreNamingService(name[0].id, tmpContext, contextCorbaElement, treeDepth + 1));
+			
+			contextCorbaElement
+					.addCorbaElement(exploreNamingService(name[0].id, tmpContext, contextCorbaElement, treeDepth + 1));
 		} else {
 			if (name.length == 1) {
 				contextCorbaElement.addCorbaElement(new ObjectCorbaElement(name[0].id, contextCorbaElement));

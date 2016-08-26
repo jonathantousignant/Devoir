@@ -10,9 +10,6 @@ import nordiasoft.devoir.model.corba.element.CorbaElement;
 public class CorbaElementContentProvider implements ITreeContentProvider {
 	private static final Object[] EMPTY_ARRAY = new Object[0];
 	
-	public CorbaElementContentProvider() {
-	}
-	
 	@Override
 	public void dispose() {
 	}
@@ -24,6 +21,7 @@ public class CorbaElementContentProvider implements ITreeContentProvider {
 	@Override
 	public Object[] getChildren(Object parentElement) {
 		Object[] objects = EMPTY_ARRAY;
+		
 		if (parentElement instanceof ContextCorbaElement) {
 			objects = ((ContextCorbaElement) parentElement).getCorbaElements().toArray();
 		}
@@ -33,7 +31,6 @@ public class CorbaElementContentProvider implements ITreeContentProvider {
 
 	@Override
 	public Object[] getElements(Object element) {
-		System.out.println(element);
 		return getChildren(element);
 	}
 

@@ -33,51 +33,18 @@
    
    <extension
          point="org.eclipse.ui.views">
+      <category
+            id="nordiasoft.devoir.view.category"
+            name="NordiaSoft Corba">
+      </category>
       <view
-            class="nordiasoft.devoir.view.decouverte.DecouverteCommonNavigator"
+            category="nordiasoft.devoir.view.category"
+            class="nordiasoft.devoir.view.decouverte.DecouverteView"
             icon="icons/nordiasoft_logo.png"
             id="nordiasoft.devoir.view"
             name="Découverte"
-			restorable="true">
+            restorable="true">
       </view>
-   </extension>
-   <extension
-         point="org.eclipse.ui.navigator.navigatorContent">
-         <navigatorContent
-	         activeByDefault="true"
-	         contentProvider="nordiasoft.devoir.model.contentprovider.CorbaElementContentProvider"
-	         id="nordiasoft.devoir.corbaprovider"
-	         labelProvider="nordiasoft.devoir.view.labelprovider.DecouverteLabelProvider"
-	         name="Naming Service content"
-	         priority="normal">
-			<triggerPoints>
-				<or>
-					<instanceof value="nordiasoft.devoir.model.corba.element.RootCorbaElement" />
-					<instanceof value="nordiasoft.devoir.model.corba.element.ContextCorbaElement" />
-				</or>
-			</triggerPoints>
-			<possibleChildren>
-				<or>
-					<instanceof value="nordiasoft.devoir.model.corba.element.ContextCorbaElement" />
-					<instanceof value="nordiasoft.devoir.model.corba.element.ObjectCorbaElement" />
-				</or>
-			</possibleChildren>
-		</navigatorContent>
-   </extension>
-   <extension
-         point="org.eclipse.ui.navigator.viewer">
-	<viewer
-		viewerId="nordiasoft.devoir.view">
-	</viewer>
-	<viewerContentBinding
-		viewerId="nordiasoft.devoir.view">
-		<includes>
-			<contentExtension
-				isRoot="false"
-				pattern="nordiasoft.devoir.corbaprovider">
-			</contentExtension>
-		</includes>
-	</viewerContentBinding>
    </extension>
    
 
