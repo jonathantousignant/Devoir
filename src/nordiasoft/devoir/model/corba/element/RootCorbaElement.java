@@ -5,5 +5,4 @@ public class RootCorbaElement extends ContextCorbaElement {
 	public RootCorbaElement(String name) {
 		super(name, null);
 	}
-
 }

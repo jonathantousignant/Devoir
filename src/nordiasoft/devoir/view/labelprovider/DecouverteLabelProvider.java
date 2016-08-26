@@ -20,7 +20,7 @@ public class DecouverteLabelProvider extends LabelProvider implements ILabelProv
 		} else if (element instanceof ObjectCorbaElement) {
 			image = PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_FILE);
 		}
-
+		
 		return image;
 	}
 
