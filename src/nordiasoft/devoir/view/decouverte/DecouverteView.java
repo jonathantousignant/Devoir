@@ -9,12 +9,11 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
 import nordiasoft.devoir.model.contentprovider.CorbaElementContentProvider;
-import nordiasoft.devoir.model.corba.element.CorbaElement;
+import nordiasoft.devoir.model.corba.element.RootCorbaElement;
 import nordiasoft.devoir.view.labelprovider.DecouverteLabelProvider;
 
 public class DecouverteView extends ViewPart {
 	private static TreeViewer viewer_;
-	private CorbaElement corbaElement_;
 	
 	private final static String ID = "nordiasoft.devoir.view";
 
@@ -35,8 +34,7 @@ public class DecouverteView extends ViewPart {
 		PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(ID);
 	}
 
-	public void showNamingServiceObjects(CorbaElement corbaElement) {
-		corbaElement_ = corbaElement;
+	public void showNamingServiceObjects(RootCorbaElement rootCorbaElement) {
 		
 		Display.getDefault().asyncExec(new Runnable() {
 			@Override
@@ -44,7 +42,7 @@ public class DecouverteView extends ViewPart {
 				try {
 					openDecouverteView();
 					
-					viewer_.setInput(corbaElement_);
+					viewer_.setInput(rootCorbaElement);
 				} catch (PartInitException e) {
 					e.printStackTrace();
 				}

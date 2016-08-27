@@ -20,7 +20,6 @@ import org.omg.CosNaming.NamingContextPackage.CannotProceed;
 import org.omg.CosNaming.NamingContextPackage.NotFound;
 
 import nordiasoft.devoir.model.corba.element.ContextCorbaElement;
-import nordiasoft.devoir.model.corba.element.CorbaElement;
 import nordiasoft.devoir.model.corba.element.ObjectCorbaElement;
 import nordiasoft.devoir.model.corba.element.RootCorbaElement;
 
@@ -42,26 +41,19 @@ public class CorbaNamingService extends Observable implements Observer {
 		}
 	}
 
-	private CorbaElement exploreNamingService(String rootName, NamingContext context)
+	private RootCorbaElement exploreNamingService(String rootName, NamingContext context)
 			throws InvalidName, NotFound, CannotProceed, org.omg.CosNaming.NamingContextPackage.InvalidName {
-		RootCorbaElement rootCorbaElement = new RootCorbaElement("Service de nom");
-
-		rootCorbaElement.addCorbaElement(exploreNamingService(rootName, context, null, 0));
-
-		return rootCorbaElement;
+		
+		return new RootCorbaElement(exploreNamingService(rootName, context, null, 0));
 	}
 
-	private CorbaElement exploreNamingService(String contextName, NamingContext context, ContextCorbaElement parent,
+	private ContextCorbaElement exploreNamingService(String contextName, NamingContext context, ContextCorbaElement parent,
 			int treeDepth)
 			throws InvalidName, NotFound, CannotProceed, org.omg.CosNaming.NamingContextPackage.InvalidName {
 
 		ContextCorbaElement contextCorbaElement = new ContextCorbaElement(contextName, parent);
 
-		BindingIteratorHolder bih = new BindingIteratorHolder();
-
-		context.list(0, new BindingListHolder(), bih);
-
-		BindingIterator bit = bih.value;
+		BindingIterator bit = getBindingIterator(context);
 
 		boolean remains = true;
 
@@ -78,6 +70,16 @@ public class CorbaNamingService extends Observable implements Observer {
 		}
 
 		return contextCorbaElement;
+	}
+
+	private BindingIterator getBindingIterator(NamingContext context) {
+		BindingIteratorHolder bih = new BindingIteratorHolder();
+
+		context.list(0, new BindingListHolder(), bih);
+
+		BindingIterator bit = bih.value;
+		
+		return bit;
 	}
 
 	private void addCorbaElement(NamingContext context, int treeDepth, ContextCorbaElement contextCorbaElement,

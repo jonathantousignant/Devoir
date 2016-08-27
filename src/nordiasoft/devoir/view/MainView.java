@@ -3,7 +3,7 @@ package nordiasoft.devoir.view;
 import java.util.Observable;
 import java.util.Observer;
 
-import nordiasoft.devoir.model.corba.element.CorbaElement;
+import nordiasoft.devoir.model.corba.element.RootCorbaElement;
 import nordiasoft.devoir.view.decouverte.DecouverteView;
 
 public class MainView implements Observer {
@@ -11,8 +11,8 @@ public class MainView implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		if (arg instanceof CorbaElement) {
-			decouverteView_.showNamingServiceObjects((CorbaElement) arg);
+		if (arg instanceof RootCorbaElement) {
+			decouverteView_.showNamingServiceObjects((RootCorbaElement) arg);
 		}
 	}
 
