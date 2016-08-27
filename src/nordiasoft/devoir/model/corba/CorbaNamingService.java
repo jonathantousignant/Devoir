@@ -34,21 +34,25 @@ public class CorbaNamingService extends Observable implements Observer {
 
 	private void getNamingServiceObjects(String args[]) {
 		try {
-			setChanged();
-			notifyObservers(exploreNamingService("Service de nom", getNamingService(args)));
-		} catch (Exception e) {
+			NamingContextExt namingContextExt = getNamingService(args);
+
+			if (namingContextExt != null) {
+				setChanged();
+				notifyObservers(exploreNamingService("Service de nom", namingContextExt));
+			}
+		} catch (InvalidName | NotFound | CannotProceed | org.omg.CosNaming.NamingContextPackage.InvalidName e) {
 			e.printStackTrace();
 		}
 	}
 
-	private RootCorbaElement exploreNamingService(String rootName, NamingContext context)
+	private RootCorbaElement exploreNamingService(String rootName, NamingContextExt context)
 			throws InvalidName, NotFound, CannotProceed, org.omg.CosNaming.NamingContextPackage.InvalidName {
-		
+
 		return new RootCorbaElement(exploreNamingService(rootName, context, null, 0));
 	}
 
-	private ContextCorbaElement exploreNamingService(String contextName, NamingContext context, ContextCorbaElement parent,
-			int treeDepth)
+	private ContextCorbaElement exploreNamingService(String contextName, NamingContext context,
+			ContextCorbaElement parent, int treeDepth)
 			throws InvalidName, NotFound, CannotProceed, org.omg.CosNaming.NamingContextPackage.InvalidName {
 
 		ContextCorbaElement contextCorbaElement = new ContextCorbaElement(contextName, parent);
@@ -78,7 +82,7 @@ public class CorbaNamingService extends Observable implements Observer {
 		context.list(0, new BindingListHolder(), bih);
 
 		BindingIterator bit = bih.value;
-		
+
 		return bit;
 	}
 
@@ -86,10 +90,10 @@ public class CorbaNamingService extends Observable implements Observer {
 			Binding binding, NameComponent[] name)
 			throws NotFound, CannotProceed, org.omg.CosNaming.NamingContextPackage.InvalidName, InvalidName {
 		if (binding.binding_type == BindingType.ncontext) {
-			NamingContext tmpContext = NamingContextHelper.narrow(context.resolve(binding.binding_name));
-			
-			contextCorbaElement
-					.addCorbaElement(exploreNamingService(name[0].id, tmpContext, contextCorbaElement, treeDepth + 1));
+			NamingContext namingContext = NamingContextHelper.narrow(context.resolve(binding.binding_name));
+
+			contextCorbaElement.addCorbaElement(
+					exploreNamingService(name[0].id, namingContext, contextCorbaElement, treeDepth + 1));
 		} else {
 			if (name.length == 1) {
 				contextCorbaElement.addCorbaElement(new ObjectCorbaElement(name[0].id, contextCorbaElement));
