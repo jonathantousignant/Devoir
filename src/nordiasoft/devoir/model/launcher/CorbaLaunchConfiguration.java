@@ -13,18 +13,18 @@ import nordiasoft.devoir.model.util.MyObservable;
 
 public class CorbaLaunchConfiguration extends LaunchConfigurationDelegate {
 	private static MyObservable observable = new MyObservable();
-	
+
 	@Override
 	public void launch(ILaunchConfiguration configuration, String mode, ILaunch launch, IProgressMonitor monitor)
 			throws CoreException {
 		observable.setChanged();
 		observable.notifyObservers(getORBInitialReferenceAttribut(configuration));
 	}
-	
+
 	private String getORBInitialReferenceAttribut(ILaunchConfiguration configuration) throws CoreException {
 		return configuration.getAttribute(CorbaLaunchConfigurationAttributes.ORB_INITIAL_REFERENCE, "");
 	}
-	
+
 	public static void addObserver(Observer observer) {
 		observable.addObserver(observer);
 	}

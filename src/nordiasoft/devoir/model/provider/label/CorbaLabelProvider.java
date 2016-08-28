@@ -1,4 +1,4 @@
-package nordiasoft.devoir.view.labelprovider;
+package nordiasoft.devoir.model.provider.label;
 
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -10,7 +10,7 @@ import nordiasoft.devoir.model.corba.element.ContextCorbaElement;
 import nordiasoft.devoir.model.corba.element.CorbaElement;
 import nordiasoft.devoir.model.corba.element.ObjectCorbaElement;
 
-public class DecouverteLabelProvider extends LabelProvider implements ILabelProvider {
+public class CorbaLabelProvider extends LabelProvider implements ILabelProvider {
 
 	@Override
 	public Image getImage(Object element) {
@@ -20,7 +20,7 @@ public class DecouverteLabelProvider extends LabelProvider implements ILabelProv
 		} else if (element instanceof ObjectCorbaElement) {
 			image = PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_FILE);
 		}
-		
+
 		return image;
 	}
 

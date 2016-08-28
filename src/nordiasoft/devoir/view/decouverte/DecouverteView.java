@@ -8,21 +8,17 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
-import nordiasoft.devoir.model.contentprovider.CorbaElementContentProvider;
-import nordiasoft.devoir.model.corba.element.RootCorbaElement;
-import nordiasoft.devoir.view.labelprovider.DecouverteLabelProvider;
+import nordiasoft.devoir.controller.communication.TreeViewerProviderCommunication;
 
 public class DecouverteView extends ViewPart {
 	private static TreeViewer viewer_;
-	
+
 	private final static String ID = "nordiasoft.devoir.view";
 
 	@Override
 	public void createPartControl(Composite parent) {
 		viewer_ = new TreeViewer(parent);
-		viewer_.setContentProvider(new CorbaElementContentProvider());
-		viewer_.setLabelProvider(new DecouverteLabelProvider());
-		viewer_.setSorter(new ViewerSorter());	
+		viewer_.setSorter(new ViewerSorter());
 	}
 
 	@Override
@@ -34,18 +30,28 @@ public class DecouverteView extends ViewPart {
 		PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(ID);
 	}
 
-	public void showNamingServiceObjects(RootCorbaElement rootCorbaElement) {
-		
+	public void showNamingServiceObjects(Object input) {
+
 		Display.getDefault().asyncExec(new Runnable() {
 			@Override
 			public void run() {
 				try {
 					openDecouverteView();
-					
-					viewer_.setInput(rootCorbaElement);
+
+					viewer_.setInput(input);
 				} catch (PartInitException e) {
 					e.printStackTrace();
 				}
+			}
+		});
+	}
+
+	public void setProvider(TreeViewerProviderCommunication treeViewProviderCommunication) {
+		Display.getDefault().asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				viewer_.setContentProvider(treeViewProviderCommunication.getContentProvider());
+				viewer_.setLabelProvider(treeViewProviderCommunication.getLabelProvider());
 			}
 		});
 	}

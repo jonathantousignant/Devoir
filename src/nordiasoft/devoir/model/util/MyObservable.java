@@ -9,5 +9,5 @@ public class MyObservable extends Observable {
 		// TODO Auto-generated method stub
 		super.setChanged();
 	}
-	
+
 }

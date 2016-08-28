@@ -8,7 +8,7 @@ public abstract class CorbaElement {
 		this.name_ = name;
 		this.parent_ = this;
 	}
-	
+
 	public CorbaElement(String name, CorbaElement parent) {
 		this.name_ = name;
 		this.parent_ = parent;
@@ -23,5 +23,5 @@ public abstract class CorbaElement {
 	}
 
 	@Override
-	public abstract String toString();	
+	public abstract String toString();
 }

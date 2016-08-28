@@ -19,6 +19,7 @@ import org.omg.CosNaming.NamingContextHelper;
 import org.omg.CosNaming.NamingContextPackage.CannotProceed;
 import org.omg.CosNaming.NamingContextPackage.NotFound;
 
+import nordiasoft.devoir.controller.communication.TreeViewerInputCommunication;
 import nordiasoft.devoir.model.corba.element.ContextCorbaElement;
 import nordiasoft.devoir.model.corba.element.ObjectCorbaElement;
 import nordiasoft.devoir.model.corba.element.RootCorbaElement;
@@ -38,7 +39,9 @@ public class CorbaNamingService extends Observable implements Observer {
 
 			if (namingContextExt != null) {
 				setChanged();
-				notifyObservers(exploreNamingService("Service de nom", namingContextExt));
+
+				notifyObservers(
+						new TreeViewerInputCommunication(exploreNamingService("Service de nom", namingContextExt)));
 			}
 		} catch (InvalidName | NotFound | CannotProceed | org.omg.CosNaming.NamingContextPackage.InvalidName e) {
 			e.printStackTrace();

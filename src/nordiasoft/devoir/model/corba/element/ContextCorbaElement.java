@@ -5,7 +5,7 @@ import java.util.List;
 
 public class ContextCorbaElement extends CorbaElement {
 	private List<CorbaElement> corbaElements = new ArrayList<>();
-	
+
 	public ContextCorbaElement(String name, CorbaElement parent) {
 		super(name, parent);
 	}
@@ -13,7 +13,7 @@ public class ContextCorbaElement extends CorbaElement {
 	public void addCorbaElement(CorbaElement corbaElement) {
 		corbaElements.add(corbaElement);
 	}
-	
+
 	public List<CorbaElement> getCorbaElements() {
 		return corbaElements;
 	}
@@ -21,11 +21,11 @@ public class ContextCorbaElement extends CorbaElement {
 	@Override
 	public String toString() {
 		String string = "Context ".concat(name_);
-		
+
 		for (CorbaElement corbaElement : corbaElements) {
 			string = string.concat(corbaElement.toString());
 		}
-		
+
 		return string;
 	}
 }

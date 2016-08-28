@@ -1,4 +1,4 @@
-package nordiasoft.devoir.model.contentprovider;
+package nordiasoft.devoir.model.provider.content;
 
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
@@ -7,9 +7,9 @@ import nordiasoft.devoir.model.corba.element.ContextCorbaElement;
 import nordiasoft.devoir.model.corba.element.CorbaElement;
 import nordiasoft.devoir.model.corba.element.RootCorbaElement;
 
-public class CorbaElementContentProvider implements ITreeContentProvider {
+public class CorbaContentProvider implements ITreeContentProvider {
 	private static final Object[] EMPTY_ARRAY = new Object[0];
-	
+
 	@Override
 	public void dispose() {
 	}
@@ -21,15 +21,15 @@ public class CorbaElementContentProvider implements ITreeContentProvider {
 	@Override
 	public Object[] getChildren(Object parentElement) {
 		Object[] objects = EMPTY_ARRAY;
-		
+
 		if (parentElement instanceof ContextCorbaElement) {
 			objects = ((ContextCorbaElement) parentElement).getCorbaElements().toArray();
 		} else if (parentElement instanceof RootCorbaElement) {
 			Object tmpObjects[] = { ((RootCorbaElement) parentElement).getContextCorbaElement() };
-			
+
 			objects = tmpObjects;
 		}
-		
+
 		return objects;
 	}
 
@@ -41,11 +41,11 @@ public class CorbaElementContentProvider implements ITreeContentProvider {
 	@Override
 	public Object getParent(Object element) {
 		Object object = null;
-		
+
 		if (element instanceof CorbaElement) {
 			object = ((CorbaElement) element).getParent();
 		}
-		
+
 		return object;
 	}
 

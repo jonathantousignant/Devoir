@@ -9,7 +9,7 @@ public class CorbaLauncherTabGroup extends AbstractLaunchConfigurationTabGroup {
 
 	@Override
 	public void createTabs(ILaunchConfigurationDialog dialog, String mode) {
-	    setTabs(new ILaunchConfigurationTab[] { new CorbaLauncherTab() ,new CommonTab()});
+		setTabs(new ILaunchConfigurationTab[] { new CorbaLauncherTab(), new CommonTab() });
 
 	}
 }
